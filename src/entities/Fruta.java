@@ -26,6 +26,10 @@ public class Fruta {
         return precoUnitario * quantidadeComprada;
     }
 
+    public void repor(int quantidade) {
+        setQuantidade(getQuantidade() + quantidade);
+    }
+
     public String getNome() {
         return nome;
     }

@@ -67,10 +67,10 @@ public class Main {
                                 do {
                                     System.out.print("Digite a quantidade de " + nome + ": ");
                                     quantidade = scanner.nextInt();
-                                    if (quantidade < 1) {
+                                    if (quantidade < 0) {
                                         System.out.println("Digite uma quantidade válida!");
                                     }
-                                } while (quantidade < 1);
+                                } while (quantidade < 0);
                                 frutas.add(new Fruta(nome, precoUnitario, quantidade));
                                 System.out.println(frutas.getLast().getNome() + " criada com sucesso!");
                                 break;
@@ -82,7 +82,7 @@ public class Main {
 
                                 do {
                                     listarFrutas(frutas);
-                                    System.out.println("Qual o índice que deseja editar?");
+                                    System.out.println("Digite o número correspondente à fruta");
                                     System.out.print("Resposta: ");
                                     index = scanner.nextInt();
                                     scanner.nextLine();
@@ -314,12 +314,12 @@ public class Main {
             for (int i = 0; i < compras.size(); i++) {
                 Fruta f = compras.get(i);
                 double totalItem = f.getTotal(quantidadeComprada.get(i));
-                writer.write(String.format("| %-2d | %-10s | R$ %-8.2f | %-4d | R$ %-8.2f |\n",
+                writer.write(String.format("| %-2d | %-10s | R$ %-7.2f | %-4d | R$ %-7.2f |\n",
                         (i + 1), f.getNome(), f.getPrecoUnitario(), quantidadeComprada.get(i), totalItem));
             }
 
             writer.write("+----+------------+------------+------+------------+\n");
-            writer.write(String.format("| %-35s | R$ %-8.2f |\n", "TOTAL GERAL", valorTotal));
+            writer.write(String.format("| %-35s | R$ %-7.2f |\n", "TOTAL GERAL", valorTotal));
             writer.write("+-------------------------------------+------------+\n");
 
             System.out.println("Nota fiscal salva em " + nomeArquivo);
