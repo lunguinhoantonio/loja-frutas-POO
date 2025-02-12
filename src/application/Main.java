@@ -5,6 +5,9 @@ import entities.Fruta;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) {
@@ -260,6 +263,32 @@ public class Main {
         System.out.println("+----+------------+------------+------+------------+");
         System.out.printf("| %-35s | R$ %-8.2f |\n", "TOTAL GERAL", valorTotal);
         System.out.println("+-------------------------------------+------------+");
+
+        salvarNFArquivo(compras, quantidadeComprada, valorTotal);
+    }
+
+    public static void salvarNFArquivo(List<Fruta> compras, List<Integer> quantidadeComprada, double valorTotal) {
+        String nomeArquivo = "nf_frutas.txt";
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(nomeArquivo))) {
+            writer.write("+----+------------+------------+------+------------+\n");
+            writer.write(String.format("| %-2s | %-10s | %-10s | %-4s | %-10s |\n", "ID", "Produto", "Preço Unit", "Qtd", "Total"));
+            writer.write("+----+------------+------------+------+------------+\n");
+
+            for (int i = 0; i < compras.size(); i++) {
+                Fruta f = compras.get(i);
+                double totalItem = f.getTotal(quantidadeComprada.get(i));
+                writer.write(String.format("| %-2d | %-10s | R$ %-8.2f | %-4d | R$ %-8.2f |\n",
+                        (i + 1), f.getNome(), f.getPrecoUnitario(), quantidadeComprada.get(i), totalItem));
+            }
+
+            writer.write("+----+------------+------------+------+------------+\n");
+            writer.write(String.format("| %-35s | R$ %-8.2f |\n", "TOTAL GERAL", valorTotal));
+            writer.write("+-------------------------------------+------------+\n");
+
+            System.out.println("Nota fiscal salva em " + nomeArquivo);
+        } catch (IOException e) {
+            System.out.println("Erro ao salvar: " + e.getMessage());
+        }
     }
 
     public static String capitalize(String nome) {
