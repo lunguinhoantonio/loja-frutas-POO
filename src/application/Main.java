@@ -27,7 +27,7 @@ public class Main {
         String nome;
         double precoUnitario;
         double valorTotal = 0.0;
-        char continuar;
+        char continuar, simOuNao;
         do {
             System.out.println("Bem vindo ao sistema de loja de frutas!");
             System.out.println("0. Fechar programa");
@@ -182,8 +182,13 @@ public class Main {
                                     }
 
                                 } while (index < 1 || index > frutas.size());
-                                System.out.println(frutas.get(index - 1).getNome() + " removida com sucesso!");
-                                frutas.remove(index - 1);
+                                System.out.println("Tem certeza que deseja remover " + frutas.get(index - 1).getNome() + "?");
+                                System.out.print("Resposta [S/N]: ");
+                                simOuNao = scanner.next().toUpperCase().charAt(0);
+                                if (simOuNao == 'S') {
+                                    System.out.println(frutas.get(index - 1).getNome() + " removida com sucesso!");
+                                    frutas.remove(index - 1);
+                                }
                                 break;
                         }
 
