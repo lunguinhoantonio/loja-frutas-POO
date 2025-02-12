@@ -283,7 +283,7 @@ public class Main {
             Fruta f = compras.get(i);
             double totalItem = f.getTotal(quantidadeComprada.get(i));
             valorTotal += totalItem;
-            System.out.printf("| %-2d | %-10s | R$ %-8.2f | %-4d | R$ %-8.2f |\n",
+            System.out.printf("| %-2d | %-10s | R$ %-7.2f | %-4d | R$ %-7.2f |\n",
                     (i + 1),
                     f.getNome(),
                     f.getPrecoUnitario(),
@@ -292,7 +292,7 @@ public class Main {
         }
 
         System.out.println("+----+------------+------------+------+------------+");
-        System.out.printf("| %-35s | R$ %-8.2f |\n", "TOTAL GERAL", valorTotal);
+        System.out.printf("| %-35s | R$ %-7.2f |\n", "TOTAL GERAL", valorTotal);
         System.out.println("+-------------------------------------+------------+");
 
         salvarNFArquivo(compras, quantidadeComprada, valorTotal);
@@ -331,11 +331,11 @@ public class Main {
     public static void exibirMenuCompras(ArrayList<Fruta> frutas) {
         System.out.println("0. Voltar");
         System.out.println("+----+---------+------------+------+");
-        System.out.printf("| %-2s | %-7s | %-10s | %-4s |\n", "ID", "Nome", "Preço Unit", "Quant");
+        System.out.printf("| %-2s | %-7s | %-10s | %-4s |\n", "ID", "Nome", "Preço Unit", "Qtd");
         System.out.println("+----+---------+------------+------+");
         for (int i = 0; i < frutas.size(); i++) {
             Fruta fruta = frutas.get(i);
-            System.out.printf("| %-2d | %-7s | R$ %-8.2f | %-4d |\n",
+            System.out.printf("| %-2d | %-7s | R$ %-7.2f | %-4d |\n",
                     (i + 1),
                     fruta.getNome(),
                     fruta.getPrecoUnitario(),
