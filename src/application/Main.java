@@ -30,7 +30,7 @@ public class Main {
         char continuar;
         do {
             System.out.println("Bem vindo ao sistema de loja de frutas!");
-            System.out.println("0. Sair do programa");
+            System.out.println("0. Fechar programa");
             System.out.println("1. Manipular sistema");
             System.out.println("2. Ir às compras");
             System.out.print("Resposta: ");
@@ -82,14 +82,14 @@ public class Main {
 
                                 do {
                                     listarFrutas(frutas);
-                                    System.out.println("Digite o número correspondente à fruta");
+                                    System.out.println("Digite o número da fruta");
                                     System.out.print("Resposta: ");
                                     index = scanner.nextInt();
                                     scanner.nextLine();
-                                    if (index < 1 || index - 1 > frutas.size()) {
+                                    if (index < 1 || index > frutas.size()) {
                                         System.out.println("Fruta não encontrada!");
                                     }
-                                } while (index < 1 || index - 1 > frutas.size());
+                                } while (index < 1 || index > frutas.size());
                                 System.out.println("Editar atributos de " + frutas.get(index - 1).getNome());
                                 System.out.println("0. Voltar");
                                 System.out.println("1. Nome");
@@ -128,6 +128,8 @@ public class Main {
                                                 + String.format("%.2f", precoUnitarioAntigo) +
                                                 " para R$"
                                                 + String.format("%.2f", frutas.get(index - 1).getPrecoUnitario()));
+                                        double porcentagemDiferenca = frutas.get(index - 1).calcularDiferencaPrecoPorcentagem(precoUnitarioAntigo);
+                                        System.out.println("O preço " + ((frutas.get(index - 1).getPrecoUnitario() > precoUnitarioAntigo) ? "aumentou " : "diminuiu ") + String.format("%.2f", porcentagemDiferenca) + "%");
                                         break;
                                     case 3:
                                         int quantidadeAntiga = frutas.get(index - 1).getQuantidade();
@@ -165,15 +167,21 @@ public class Main {
                                 }
 
                                 do {
+                                    System.out.println("0. Voltar");
                                     listarFrutas(frutas);
                                     System.out.println("Qual o índice que deseja remover?");
                                     System.out.print("Resposta: ");
                                     index = scanner.nextInt();
                                     scanner.nextLine();
-                                    if (index < 1 || index - 1 > frutas.size()) {
+                                    if (index == 0) {
+                                        break;
+                                    }
+
+                                    if (index < 1 || index > frutas.size()) {
                                         System.out.println("Fruta não encontrada!");
                                     }
-                                } while (index < 1 || index - 1 > frutas.size());
+
+                                } while (index < 1 || index > frutas.size());
                                 System.out.println(frutas.get(index - 1).getNome() + " removida com sucesso!");
                                 frutas.remove(index - 1);
                                 break;

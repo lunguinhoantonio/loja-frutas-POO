@@ -26,8 +26,9 @@ public class Fruta {
         return precoUnitario * quantidadeComprada;
     }
 
-    public void repor(int quantidade) {
-        setQuantidade(getQuantidade() + quantidade);
+    public double calcularDiferencaPrecoPorcentagem(double precoAntigo) {
+        double diferenca = precoAntigo - getPrecoUnitario();
+        return Math.abs((diferenca / precoAntigo) * 100);
     }
 
     public String getNome() {
