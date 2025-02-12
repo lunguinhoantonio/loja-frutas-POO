@@ -232,14 +232,21 @@ public class Main {
 
                         do {
                             System.out.print("Digite a quantidade: ");
+                            if (!scanner.hasNextInt()) {
+                                System.out.println("Digite um número válido!");
+                                scanner.next();
+                                continue;
+                            }
                             quantidadeComprada = scanner.nextInt();
                             scanner.nextLine();
                             if (quantidadeComprada > frutas.get(frutaEscolhida - 1).getQuantidade()) {
                                 quantidadeComprada = frutas.get(frutaEscolhida - 1).getQuantidade();
+                                break;
                             }
-                        } while (quantidadeComprada > frutas.get(frutaEscolhida - 1).getQuantidade());
+                            break;
+                        } while (true);
 
-                        System.out.println("Pedido: ");
+                        System.out.print("Pedido: ");
                         valorCompra = frutas.get(frutaEscolhida - 1).getTotal(quantidadeComprada);
                         System.out.println(quantidadeComprada + " " + frutas.get(frutaEscolhida - 1).getNome() +
                                 ((quantidadeComprada == 1) ? "" : "s") +
@@ -289,7 +296,7 @@ public class Main {
 
     public static void exibirNF(List<Fruta> compras, List<Integer> quantidadeComprada, double valorTotal) {
         System.out.println("+----+------------+------------+------+------------+");
-        System.out.printf("| %-2s | %-10s | %-10s | %-4s | %-10s |\n", "ID", "Produto", "Preço Unit", "Qtd", "Total");
+        System.out.printf("| %-2s |  %-9s | %-10s | %-4s |   %-8s |\n", "ID", "Produto", "Preço Unit", "Qtd", "Total");
         System.out.println("+----+------------+------------+------+------------+");
 
         for (int i = 0; i < compras.size(); i++) {
@@ -315,7 +322,7 @@ public class Main {
         String nomeArquivo = "nf_frutas.txt";
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(nomeArquivo))) {
             writer.write("+----+------------+------------+------+------------+\n");
-            writer.write(String.format("| %-2s | %-10s | %-10s | %-4s | %-10s |\n",
+            writer.write(String.format("| %-2s |  %-9s | %-10s | %-4s |   %-8s |\n",
                     "ID",
                     "Produto",
                     "Preço Unit",
@@ -344,7 +351,7 @@ public class Main {
     public static void exibirMenuCompras(ArrayList<Fruta> frutas) {
         System.out.println("0. Voltar");
         System.out.println("+----+---------+------------+------+");
-        System.out.printf("| %-2s | %-7s | %-10s | %-4s |\n", "ID", "Nome", "Preço Unit", "Qtd");
+        System.out.printf("| %-2s |  %-6s | %-10s | %-4s |\n", "ID", "Nome", "Preço Unit", "Qtd");
         System.out.println("+----+---------+------------+------+");
         for (int i = 0; i < frutas.size(); i++) {
             Fruta fruta = frutas.get(i);
