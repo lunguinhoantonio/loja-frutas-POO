@@ -16,19 +16,18 @@ public class Main {
         List<Fruta> compras = new ArrayList<>();
         List<Integer> quantCompra = new ArrayList<>();
 
-        frutas.add(new Fruta("Abacaxi", 2.5, 5));
-        frutas.add(new Fruta("Goiaba", 1.25, 2));
+        frutas.add(new Fruta("Abacaxi", 2.5, 7));
+        frutas.add(new Fruta("Goiaba", 1.25, 12));
         frutas.add(new Fruta("Uva", 2, 10));
-        frutas.add(new Fruta("Manga", 1.5, 3));
-        frutas.add(new Fruta("Banana", 0.5, 7));
+        frutas.add(new Fruta("Manga", 1.5, 8));
+        frutas.add(new Fruta("Banana", 0.5, 14));
 
         boolean go = true;
-        int opc, index;
+        int opc, index, quantidade, frutaEscolhida;
         String nome;
         double precoUnitario;
         double valorTotal = 0.0;
-        char continuar = 'c';
-        int quantidade;
+        char continuar;
         do {
             System.out.println("Bem vindo ao sistema de loja de frutas!");
             System.out.println("0. Sair do programa");
@@ -108,12 +107,16 @@ public class Main {
                                         nome = scanner.nextLine();
                                         nome = capitalize(nome);
                                         frutas.get(index - 1).setNome(nome);
-                                        System.out.println("Nome alterado de " + nomeAntigo + " para " + frutas.get(index - 1).getNome());
+                                        System.out.println("Nome alterado de "
+                                                + nomeAntigo +
+                                                " para "
+                                                + frutas.get(index - 1).getNome());
                                         break;
                                     case 2:
                                         double precoUnitarioAntigo = frutas.get(index - 1).getPrecoUnitario();
                                         do {
-                                            System.out.println("Preço unitário antigo: R$" + String.format("%.2f", frutas.get(index - 1).getPrecoUnitario()));
+                                            System.out.println("Preço unitário antigo: R$"
+                                                    + String.format("%.2f", frutas.get(index - 1).getPrecoUnitario()));
                                             System.out.print("Novo preço unitário (R$): ");
                                             precoUnitario = scanner.nextDouble();
                                             if (precoUnitario < 0) {
@@ -121,12 +124,18 @@ public class Main {
                                             }
                                         } while (precoUnitario < 0);
                                         frutas.get(index - 1).setPrecoUnitario(precoUnitario);
-                                        System.out.println("Preço unitário alterado de R$" + String.format("%.2f", precoUnitarioAntigo) + " para R$" + String.format("%.2f", frutas.get(index - 1).getPrecoUnitario()));
+                                        System.out.println("Preço unitário alterado de R$"
+                                                + String.format("%.2f", precoUnitarioAntigo) +
+                                                " para R$"
+                                                + String.format("%.2f", frutas.get(index - 1).getPrecoUnitario()));
                                         break;
                                     case 3:
                                         int quantidadeAntiga = frutas.get(index - 1).getQuantidade();
                                         do {
-                                            System.out.println("Quantidade de " + frutas.get(index - 1).getNome() + ": " + frutas.get(index - 1).getQuantidade());
+                                            System.out.println("Quantidade de "
+                                                    + frutas.get(index - 1).getNome() +
+                                                    ": "
+                                                    + frutas.get(index - 1).getQuantidade());
                                             System.out.print("Nova quantidade: ");
                                             quantidade = scanner.nextInt();
                                             scanner.nextLine();
@@ -139,7 +148,10 @@ public class Main {
                                             }
                                         } while (quantidade < 1);
                                         frutas.get(index - 1).setQuantidade(quantidade);
-                                        System.out.println("Quantidade alterada de " + quantidadeAntiga + " para " + frutas.get(index - 1).getQuantidade());
+                                        System.out.println("Quantidade alterada de "
+                                                + quantidadeAntiga +
+                                                " para "
+                                                + frutas.get(index - 1).getQuantidade());
                                         break;
                                     default:
                                         System.out.println("Digite uma opção válida!");
@@ -177,30 +189,31 @@ public class Main {
 
                     double valorCompra;
                     int quantidadeComprada;
-                    do {
-                        System.out.println("+----+---------+------------+------+");
-                        System.out.printf("| %-2s | %-7s | %-10s | %-4s |\n", "ID", "Nome", "Preço Unit", "Quant");
-                        System.out.println("+----+---------+------------+------+");
-                        for (int i = 0; i < frutas.size(); i++) {
-                            Fruta fruta = frutas.get(i);
-                            System.out.printf("| %-2d | %-7s | R$ %-8.2f | %-4d |\n", (i + 1), fruta.getNome(), fruta.getPrecoUnitario(), fruta.getQuantidade());
-                        }
-                        System.out.println("+----+---------+------------+------+");
-                        System.out.print("Resposta: ");
-                        index = scanner.nextInt();
-                        scanner.nextLine();
-                        if (index == 0) {
-                            System.out.println("Fechando programa...");
-                            System.exit(0);
-                        }
 
-                        if (index < 0 || index > frutas.size()) {
-                            System.out.println("Escolha entre 0 e " + frutas.size() + "!");
+                    while (true) {
+                        exibirMenuCompras(frutas);
+                        System.out.print("Resposta: ");
+
+                        if (!scanner.hasNextInt()) {
+                            System.out.println("Digite um número válido!");
+                            scanner.next();
                             continue;
                         }
 
-                        if (frutas.get(index - 1).getQuantidade() == 0) {
-                            System.out.println("Não tem estoque para " + frutas.get(index - 1).getNome());
+                        frutaEscolhida = scanner.nextInt();
+                        scanner.nextLine();
+
+                        if (frutaEscolhida == 0) {
+                            break;
+                        }
+
+                        if (frutaEscolhida < 1 || frutaEscolhida > frutas.size()) {
+                            System.out.println("Escolha entre 1 e " + frutas.size() + "!");
+                            continue;
+                        }
+
+                        if (frutas.get(frutaEscolhida - 1).getQuantidade() == 0) {
+                            System.out.println("Não tem estoque para " + frutas.get(frutaEscolhida - 1).getNome());
                             continue;
                         }
 
@@ -208,18 +221,22 @@ public class Main {
                             System.out.print("Digite a quantidade: ");
                             quantidadeComprada = scanner.nextInt();
                             scanner.nextLine();
-                            if (quantidadeComprada > frutas.get(index - 1).getQuantidade()) {
-                                quantidadeComprada = frutas.get(index - 1).getQuantidade();
+                            if (quantidadeComprada > frutas.get(frutaEscolhida - 1).getQuantidade()) {
+                                quantidadeComprada = frutas.get(frutaEscolhida - 1).getQuantidade();
                             }
-                        } while (quantidadeComprada > frutas.get(index - 1).getQuantidade());
+                        } while (quantidadeComprada > frutas.get(frutaEscolhida - 1).getQuantidade());
 
                         System.out.println("Pedido: ");
-                        valorCompra = frutas.get(index - 1).getTotal(quantidadeComprada);
-                        System.out.println(quantidadeComprada + " " + frutas.get(index - 1).getNome() + ((quantidadeComprada == 1) ? "" : "s") + " por R$" + String.format("%.2f", valorCompra));
-                        frutas.get(index - 1).setQuantidade(frutas.get(index - 1).getQuantidade() - quantidadeComprada);
+                        valorCompra = frutas.get(frutaEscolhida - 1).getTotal(quantidadeComprada);
+                        System.out.println(quantidadeComprada + " " + frutas.get(frutaEscolhida - 1).getNome() +
+                                ((quantidadeComprada == 1) ? "" : "s") +
+                                " por R$" + String.format("%.2f", valorCompra));
+
+                        frutas.get(frutaEscolhida - 1).setQuantidade(frutas.get(frutaEscolhida - 1).getQuantidade() - quantidadeComprada);
+
                         boolean frutaJaComprada = false;
                         for (int i = 0; i < compras.size(); i++) {
-                            if (compras.get(i).getNome().equals(frutas.get(index - 1).getNome())) {
+                            if (compras.get(i).getNome().equals(frutas.get(frutaEscolhida - 1).getNome())) {
                                 quantCompra.set(i, quantCompra.get(i) + quantidadeComprada);
                                 frutaJaComprada = true;
                                 break;
@@ -227,14 +244,23 @@ public class Main {
                         }
 
                         if (!frutaJaComprada) {
-                            compras.add(frutas.get(index - 1));
+                            compras.add(frutas.get(frutaEscolhida - 1));
                             quantCompra.add(quantidadeComprada);
                         }
 
                         System.out.print("Continuar comprando? [S/N]: ");
                         continuar = scanner.next().toUpperCase().charAt(0);
-                    } while (continuar == 'S');
-                    exibirNF(compras, quantCompra, valorTotal);
+
+                        if (continuar != 'S') {
+                            break;
+                        }
+                    }
+                    if (compras.isEmpty()) {
+                        System.out.println("Nenhuma compra foi realizada.");
+                    } else {
+                        exibirNF(compras, quantCompra, valorTotal);
+                    }
+                    break;
             }
         } while(go);
         scanner.close();
@@ -257,7 +283,12 @@ public class Main {
             Fruta f = compras.get(i);
             double totalItem = f.getTotal(quantidadeComprada.get(i));
             valorTotal += totalItem;
-            System.out.printf("| %-2d | %-10s | R$ %-8.2f | %-4d | R$ %-8.2f |\n", (i + 1), f.getNome(), f.getPrecoUnitario(), quantidadeComprada.get(i), totalItem);
+            System.out.printf("| %-2d | %-10s | R$ %-8.2f | %-4d | R$ %-8.2f |\n",
+                    (i + 1),
+                    f.getNome(),
+                    f.getPrecoUnitario(),
+                    quantidadeComprada.get(i),
+                    totalItem);
         }
 
         System.out.println("+----+------------+------------+------+------------+");
@@ -271,7 +302,13 @@ public class Main {
         String nomeArquivo = "nf_frutas.txt";
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(nomeArquivo))) {
             writer.write("+----+------------+------------+------+------------+\n");
-            writer.write(String.format("| %-2s | %-10s | %-10s | %-4s | %-10s |\n", "ID", "Produto", "Preço Unit", "Qtd", "Total"));
+            writer.write(String.format("| %-2s | %-10s | %-10s | %-4s | %-10s |\n",
+                    "ID",
+                    "Produto",
+                    "Preço Unit",
+                    "Qtd",
+                    "Total"));
+
             writer.write("+----+------------+------------+------+------------+\n");
 
             for (int i = 0; i < compras.size(); i++) {
@@ -289,6 +326,22 @@ public class Main {
         } catch (IOException e) {
             System.out.println("Erro ao salvar: " + e.getMessage());
         }
+    }
+
+    public static void exibirMenuCompras(ArrayList<Fruta> frutas) {
+        System.out.println("0. Voltar");
+        System.out.println("+----+---------+------------+------+");
+        System.out.printf("| %-2s | %-7s | %-10s | %-4s |\n", "ID", "Nome", "Preço Unit", "Quant");
+        System.out.println("+----+---------+------------+------+");
+        for (int i = 0; i < frutas.size(); i++) {
+            Fruta fruta = frutas.get(i);
+            System.out.printf("| %-2d | %-7s | R$ %-8.2f | %-4d |\n",
+                    (i + 1),
+                    fruta.getNome(),
+                    fruta.getPrecoUnitario(),
+                    fruta.getQuantidade());
+        }
+        System.out.println("+----+---------+------------+------+");
     }
 
     public static String capitalize(String nome) {
