@@ -129,8 +129,15 @@ public class Main {
                                                 + String.format("%.2f", precoUnitarioAntigo) +
                                                 " para R$"
                                                 + String.format("%.2f", frutas.get(index - 1).getPrecoUnitario()));
-                                        double porcentagemDiferenca = frutas.get(index - 1).calcularDiferencaPrecoPorcentagem(precoUnitarioAntigo);
-                                        System.out.println("O preço " + ((frutas.get(index - 1).getPrecoUnitario() > precoUnitarioAntigo) ? "aumentou " : "diminuiu ") + String.format("%.2f", porcentagemDiferenca) + "%");
+                                        double porcentagemDiferenca = frutas
+                                                .get(index - 1)
+                                                .calcularDiferencaPrecoPorcentagem(precoUnitarioAntigo);
+
+                                        System.out.println("O preço "
+                                                + ((frutas.get(index - 1).getPrecoUnitario() > precoUnitarioAntigo)
+                                                ? "aumentou " : "diminuiu ")
+                                                + String.format("%.2f", porcentagemDiferenca)
+                                                + "%");
                                         break;
                                     case 3:
                                         int quantidadeAntiga = frutas.get(index - 1).getQuantidade();
@@ -279,7 +286,7 @@ public class Main {
                     if (compras.isEmpty()) {
                         System.out.println("Nenhuma compra foi realizada.");
                     } else {
-                        exibirNF(compras, quantCompra, valorTotal);
+                        exibirCompras(compras, quantCompra, valorTotal);
                         salvarNFArquivo(compras, quantCompra);
                     }
                     break;
@@ -290,7 +297,7 @@ public class Main {
                     }
                     do {
                         System.out.println("0. Voltar");
-                        listarCompras(compras, quantCompra, valorTotal);
+                        exibirCompras(compras, quantCompra, valorTotal);
                         System.out.println("Digite o ID da compra para cancelar");
                         System.out.print("Resposta: ");
                         index = scanner.nextInt();
@@ -303,11 +310,20 @@ public class Main {
                             System.out.println("Compra não encontrada!");
                             continue;
                         }
-                        System.out.println("Tem certeza que quer remover " + quantCompra.get(index - 1) + " " + compras.get(index - 1).getNome() + (quantCompra.get(index - 1) == 1 ? " " : "s ") + "da lista de compras?");
+                        System.out.println("Tem certeza que quer remover "
+                                + quantCompra.get(index - 1) +
+                                " "
+                                + compras.get(index - 1).getNome()
+                                + (quantCompra.get(index - 1) == 1 ? " " : "s ")
+                                + "da lista de compras?");
                         System.out.print("Resposta [S/N]: ");
                         simOuNao = scanner.next().toUpperCase().charAt(0);
                         if (simOuNao == 'S') {
-                            System.out.println("Pedido cancelado: " + quantCompra.get(index - 1) + " " + compras.get(index - 1).getNome() + (quantCompra.get(index - 1) == 1 ? " " : "s "));
+                            System.out.println("Pedido cancelado: "
+                                    + quantCompra.get(index - 1) +
+                                    " "
+                                    + compras.get(index - 1).getNome()
+                                    + (quantCompra.get(index - 1) == 1 ? " " : "s "));
                             compras.remove(index - 1);
                             quantCompra.remove(index - 1);
                         }
@@ -328,29 +344,7 @@ public class Main {
         }
     }
 
-    public static void listarCompras(List<Fruta> compras, List<Integer> quantidadeComprada, double valorTotal) {
-        System.out.println("+----+------------+------------+------+------------+");
-        System.out.printf("| %-2s |  %-9s | %-10s | %-4s |   %-8s |\n", "ID", "Produto", "Preço Unit", "Qtd", "Total");
-        System.out.println("+----+------------+------------+------+------------+");
-
-        for (int i = 0; i < compras.size(); i++) {
-            Fruta f = compras.get(i);
-            double totalItem = f.getTotal(quantidadeComprada.get(i));
-            valorTotal += totalItem;
-            System.out.printf("| %-2d | %-10s | R$ %-7.2f | %-4d | R$ %-7.2f |\n",
-                    (i + 1),
-                    f.getNome(),
-                    f.getPrecoUnitario(),
-                    quantidadeComprada.get(i),
-                    totalItem);
-        }
-
-        System.out.println("+----+------------+------------+------+------------+");
-        System.out.printf("| %-35s | R$ %-7.2f |\n", "TOTAL GERAL", valorTotal);
-        System.out.println("+-------------------------------------+------------+");
-    }
-
-    public static void exibirNF(List<Fruta> compras, List<Integer> quantidadeComprada, double valorTotal) {
+    public static void exibirCompras(List<Fruta> compras, List<Integer> quantidadeComprada, double valorTotal) {
         System.out.println("+----+------------+------------+------+------------+");
         System.out.printf("| %-2s |  %-9s | %-10s | %-4s |   %-8s |\n", "ID", "Produto", "Preço Unit", "Qtd", "Total");
         System.out.println("+----+------------+------------+------+------------+");
