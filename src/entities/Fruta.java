@@ -1,57 +1,17 @@
 package entities;
 
-public class Fruta {
-    private String nome;
-    private double precoUnitario;
-    private int quantidade;
-
-    public Fruta() {
-
-    }
-
+public class Fruta extends Produto {
     public Fruta(String nome, double precoUnitario, int quantidade) {
-        this.nome = nome;
-        this.precoUnitario = precoUnitario;
-        this.quantidade = quantidade;
+        super(nome, precoUnitario, quantidade);
     }
 
     @Override
-    public String toString() {
-        return "Nome = '" + getNome() + '\'' +
-                ", Preço Unitário = " + String.format("%.2f", getPrecoUnitario()) +
-                ", Quantidade = " + getQuantidade();
-    }
-
     public double getTotal(int quantidadeComprada) {
-        return precoUnitario * quantidadeComprada;
+        return getPrecoUnitario() * quantidadeComprada;
     }
 
     public double calcularDiferencaPrecoPorcentagem(double precoAntigo) {
         double diferenca = precoAntigo - getPrecoUnitario();
         return Math.abs((diferenca / precoAntigo) * 100);
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public double getPrecoUnitario() {
-        return precoUnitario;
-    }
-
-    public void setPrecoUnitario(double precoUnitario) {
-        this.precoUnitario = precoUnitario;
-    }
-
-    public int getQuantidade() {
-        return quantidade;
-    }
-
-    public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
     }
 }
